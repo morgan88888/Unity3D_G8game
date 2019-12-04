@@ -65,6 +65,8 @@
   <ItemGroup>
     <Compile Include="Assets\chicken.cs" />
     <Compile Include="Assets\learnAPIstatic.cs" />
+    <Compile Include="Assets\LearnIF.cs" />
+    <Compile Include="Assets\LearnOperator.cs" />
     <Compile Include="Assets\NewBehaviourScript.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/A309/Documents/GitHub/Unity3D_G8game/G8Unity_project/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
