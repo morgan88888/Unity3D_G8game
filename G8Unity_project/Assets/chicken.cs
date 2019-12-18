@@ -12,23 +12,32 @@ public class chicken : MonoBehaviour
     [Header("是否完成任務")]
     public bool mission;
     [Header("玩家名稱")]
-    public string name = "G8雞";
+    public new string name = "G8雞";
     #endregion
      
     public Transform tran;
     public Rigidbody rig;
     public Animator ani;
+    public AudioClip aud;
+
+    public AudioClip soundBark;
 
     private void Update()
     {
         Turn();
         Run();
+        Bark();
+        Catch();
     }
 
     private void Run()
     {
+        if (ani.GetCurrentAnimatorStateInfo(0).IsName("吃")) return;
+
         float v = Input.GetAxis("Vertical");
         rig.AddForce(tran.forward * speed * v * Time.deltaTime);
+
+        ani.SetBool("走路", v != 0);
     }
     private void Turn()
     {
@@ -37,11 +46,19 @@ public class chicken : MonoBehaviour
     }
     private void Bark()
     {
-         
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ani.SetTrigger("拍翅膀");
+
+            aud.PlayOneShot(soundBark);
+        }
     }
     private void Catch()
     {
-
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            ani.SetTrigger("吃");
+        }
     }
     private void Task()
     {
