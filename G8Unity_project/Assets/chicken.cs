@@ -18,9 +18,13 @@ public class chicken : MonoBehaviour
     public Transform tran;
     public Rigidbody rig;
     public Animator ani;
-    public AudioClip aud;
+    public AudioSource aud; 
 
     public AudioClip soundBark;
+
+    [Header("檢")]
+    public Rigidbody rigCatch;
+
 
     private void Update()
     {
@@ -28,6 +32,23 @@ public class chicken : MonoBehaviour
         Run();
         Bark();
         Catch();
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        print(other.name);
+
+        if (other.name == "腿" && ani.GetCurrentAnimatorStateInfo(0).IsName("吃"))
+        {
+            Physics.IgnoreCollision(other, GetComponent<Collider>());
+
+            other.GetComponent<HingeJoint>().connectedBody = rigCatch;
+        }
+
+        if (other.name == "沙" && ani.GetCurrentAnimatorStateInfo(0).IsName("吃"))
+        {
+            GameObject.Find("腿").GetComponent<HingeJoint>().connectedBody = null;
+        }
     }
 
     private void Run()
@@ -50,7 +71,7 @@ public class chicken : MonoBehaviour
         {
             ani.SetTrigger("拍翅膀");
 
-            aud.PlayOneShot(soundBark);
+            aud.PlayOneShot(soundBark, 0.6f);
         }
     }
     private void Catch()
